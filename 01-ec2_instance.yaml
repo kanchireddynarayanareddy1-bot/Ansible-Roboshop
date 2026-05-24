@@ -25,14 +25,14 @@
   #    msg: "{{ ec2_output }}"  
 
 # public_ip addres
-  task:
+  tasks:
   - name: get public_ip
     ansible.builtin.debug:
     msg: "{{ item.instances[0].public_ip_address}}"
     loop: "{{ ec2_output.results}}"
 
 # private_ip addres     
-  task:
+  tasks:
   - name: get private_ip
     ansible.builtin.debug:
     msg: "{{ item.instances[0].private_ip_address}}"
