@@ -1,0 +1,21 @@
+- name: create instances
+  hosts: local
+  connection: local
+  vars:
+   AMI_ID: "ami-0220d79f3f480ecf5" # replace with your AMI ID, you can use the same AMI for all instances as we are going to install the software in the next steps
+   SG_ID: "sg-031674407f289d035"  # replace with your SG ID
+   ZONE_ID: "Z07436271Q3L1R10WFWTQ" # replace with your ID
+   DOMAIN_NAME: "chandrahasa.online"
+   instances:
+   - mongodb
+  tasks:
+   - name: create ec2 instances
+     amazon.aws.ec2_instance: 
+      name: "{{ item }}"
+      instance_type: t3.micro
+      security_group: "{{ SG_ID }}"
+      image_id: "{{ AMI_ID }}"
+      tags:
+       Environment: "{{ item }}"
+  loop: "{{ instances }}" 
+  rigister: ec2_output
