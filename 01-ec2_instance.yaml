@@ -8,6 +8,7 @@
    DOMAIN_NAME: "chandrahasa.online"
    instances:
    - mongodb
+   - mysql
   tasks:
    - name: create ec2 instances
      amazon.aws.ec2_instance: 
