@@ -52,6 +52,7 @@
       ttl: 1
       value: "{{ item.instances[0].private_ip_address }}"
       overwrite: true
+    when: item.item != "frontend"  
     loop: "{{ ec2_output.results }}"   
 
       # we are creating one record with public only for frontend
