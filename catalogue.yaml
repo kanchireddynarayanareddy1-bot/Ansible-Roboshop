@@ -18,8 +18,8 @@
     name: roboshop
     comment: "roboshop system user"
     system: true
-    shell: /app
     home: /sbin/nologin
+    shell: /app
 
 - name: create directory
   ansible.builtin.file:
