@@ -1,5 +1,5 @@
-- name: catalogue configuration
-  hosts: catalogue
+- name: user configuration
+  hosts: user
   become: yes
   tasks:
   - name: disables packages
@@ -26,19 +26,19 @@
       state: directory
       path: /app
 
-  - name: Delete catalogue file
+  - name: Delete user file
     ansible.builtin.file:
-      path: /tmp/catalogue.zip
+      path: /tmp/user.zip
       state: absent    
 
   - name: downlode code
     ansible.builtin.get_url:
-      url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-      dest: /tmp/catalogue.zip       
+      url: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
+      dest: /tmp/user.zip       
 
   - name: unzip the code
     ansible.builtin.unarchive:
-      src: /tmp/catalogue.zip
+      src: /tmp/user.zip
       dest: /app
       remote_src: yes
 
@@ -48,27 +48,8 @@
 
   - name: systemd service
     ansible.builtin.copy:
-      src: catalogue.service
-      dest: /etc/systemd/system/catalogue.service
-
-  - name: copy mongorepo
-    ansible.builtin.copy:
-      src: mongo.repo
-      dest: /etc/yum.repos.d/mongo.repo
-
-  - name: install mongodb client
-    ansible.builtin.package:
-      name: mongodb-mongosh
-      state: present
-
-  - name: connect to mongodb catalogue
-    ansible.builtin.command: mongosh mongodb.chandrahasa.online --quiet --eval "db.getMongo().getDBNames(). indexOf('catalogue')"
-    register: catalogue_output
-
-  - name: load products into mongodb
-    ansible.builtin.shell: mongosh --host mongodb.chandrahasa.online </app/db/master-data.js
-    when: catalogue_output.stdout | int < 0  
-
+      src: user.service
+      dest: /etc/systemd/system/user.service
 
   - name: start and enable service
     ansible.builtin.service:
