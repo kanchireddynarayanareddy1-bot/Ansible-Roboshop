@@ -67,7 +67,7 @@
 
   - name: start and enable service
     ansible.builtin.service:
-      name: redis
+      name: catalogue
       enabled: yes
       state: started   
       daemon_reload: true
