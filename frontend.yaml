@@ -20,7 +20,7 @@
  
   - name: create html directory
     ansible.builtin.file:
-      path: /usr/share/nginx/html
+      path: /usr/share/nginx/html/
       state: directory
 
   - name: downlode file
@@ -31,7 +31,7 @@
   - name: unzip the code
     ansible.builtin.unarchive:
       src: /tmp/frontend.zip
-      dest: /usr/share/nginx/html
+      dest: /usr/share/nginx/html/
 
   - name: copy nginx conf
     ansible.builtin.copy:
